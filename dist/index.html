@@ -4,10 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./public/styles.css" />
     <title>Todo List</title>
   </head>
   <body>
-    <div id="content"></div>
+    <div class="text-center">
+      <h1>Toby's Todo List</h1>
+    </div>
+    <div class="main">
+      <div id="side-bar">
+        <aside>
+          <div>
+            <header>Projects</header>
+            add svg goes here, bound to some event listener
+          </div>
+          <ul class="list" id="projects"></ul>
+        </aside>
+      </div>
+      <div>
+        <form id="add-task-form">
+          <input type="text" placeholder="Add a task" class="add-task" />
+        </form>
+        <div id="task-list"></div>
+      </div>
+    </div>
     <script src="./main.js"></script>
   </body>
 </html>
