@@ -10,16 +10,18 @@ import PubSub from "pubsub-js";
   const testStorage = [];
   let token;
 
+  const TASK_ADDED_TOPIC = "task added";
+  const TASK_LIST = "render task list";
+
   const init = function () {
-    token = PubSub.subscribe("task added", handleTaskAdded);
+    token = PubSub.subscribe(TASK_ADDED_TOPIC, handleTaskAdded);
   };
 
-  const handleTaskAdded = function (msg, task) {
+  const handleTaskAdded = function (_, task) {
+    // _ is the topic from PubSub
     testStorage.push(task);
-    console.log(msg);
-    console.log(testStorage);
+    PubSub.publish(TASK_LIST, testStorage);
   };
 
   init();
 })();
-// export default subscribe;

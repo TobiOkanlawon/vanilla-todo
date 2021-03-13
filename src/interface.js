@@ -32,15 +32,25 @@ import createTask from "./task";
     addTaskForm.reset();
   };
 
+  const createTaskElementFactory = function (title) {
+    const taskElementContainer = document.createElement("div");
+    taskElementContainer.classList.add("task-container");
+
+    const taskTitle = document.createElement("p");
+    taskTitle.classList.add("task-title");
+    taskTitle.innerText = title;
+
+    taskElementContainer.appendChild(taskTitle);
+    return taskElementContainer;
+  };
+
   const renderTaskList = function (_, list) {
+    // set the project name here too.
     taskList.innerText = "";
-    console.log(list);
     for (const item of list) {
       // should probably create a factory function for creating task elements
-      console.log(item);
-      const taskElement = document.createElement("p");
-      taskElement.innerText = item.title;
-      taskList.appendChild(taskElement);
+      const task = createTaskElementFactory(item.title);
+      taskList.appendChild(task);
     }
   };
 
