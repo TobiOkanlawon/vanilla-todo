@@ -1,6 +1,19 @@
-.main {
+#main {
   display: flex;
-  flex-direction: row;
+  /* should actually be grid */
+}
+
+#side-bar {
+  flex-basis: 300px;
+  background-color: #ded9f4;
+}
+
+#right-side {
+  padding: 40px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .list {
