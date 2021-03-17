@@ -19,7 +19,8 @@ import PubSub from "pubsub-js";
 
   const handleTaskAdded = function (_, task) {
     // _ is the topic from PubSub
-    testStorage.push(task);
+    testStorage.push({ id: task.length + 1, task });
+    console.log(testStorage);
     PubSub.publish(TASK_LIST, testStorage);
   };
 

@@ -3,11 +3,16 @@ import createTask from "./task";
 
 (function () {
   const projects = document.getElementById("projects");
-  const taskList = document.getElementById("task-list");
+  const tasksContainer = document.getElementById("task-list");
   const addTaskForm = document.getElementById("add-task-form");
 
   const TASK_ADDED_TOPIC = "task added";
   const TASK_LIST = "render task list";
+
+  const init = function () {
+    bindDOMEvents();
+    subscribeToEvents();
+  };
 
   const bindDOMEvents = function () {
     // Should this really be a function
@@ -19,11 +24,6 @@ import createTask from "./task";
     PubSub.subscribe(TASK_LIST, renderTaskList);
   };
 
-  const init = function () {
-    bindDOMEvents();
-    subscribeToEvents();
-  };
-
   const handleAddTask = function (e) {
     e.preventDefault();
 
@@ -32,9 +32,11 @@ import createTask from "./task";
     addTaskForm.reset();
   };
 
-  const createTaskElementFactory = function (title) {
+  const createTaskElementFactory = function (id, title) {
     const taskElementContainer = document.createElement("div");
     taskElementContainer.classList.add("task-container");
+
+    taskElementContainer.setAttribute("data-id", id);
 
     const taskTitle = document.createElement("p");
     taskTitle.classList.add("task-title");
@@ -46,11 +48,11 @@ import createTask from "./task";
 
   const renderTaskList = function (_, list) {
     // set the project name here too.
-    taskList.innerText = "";
-    for (const item of list) {
+    tasksContainer.innerText = "";
+    for (const { id, task } of list) {
       // should probably create a factory function for creating task elements
-      const task = createTaskElementFactory(item.title);
-      taskList.appendChild(task);
+      const taskElement = createTaskElementFactory(id, task.title);
+      tasksContainer.appendChild(taskElement);
     }
   };
 
