@@ -6,8 +6,9 @@ import createTask from "./task";
   const tasksContainer = document.getElementById("task-list");
   const addTaskForm = document.getElementById("add-task-form");
 
-  const TASK_ADDED_TOPIC = "task added";
+  const ADD_TASK = "task added";
   const TASK_LIST = "render task list";
+  const DELETE_TASK = "delete task";
 
   const init = function () {
     bindDOMEvents();
@@ -28,8 +29,13 @@ import createTask from "./task";
     e.preventDefault();
 
     const task = createTask(addTaskForm["new-task"].value);
-    PubSub.publish(TASK_ADDED_TOPIC, task);
+    PubSub.publish(ADD_TASK, task);
     addTaskForm.reset();
+  };
+
+  const handleDelete = function (id) {
+    // get the element's data-id with the e argument
+    PubSub.publish(DELETE_TASK, id);
   };
 
   const createTaskElementFactory = function (id, title) {
@@ -42,7 +48,13 @@ import createTask from "./task";
     taskTitle.classList.add("task-title");
     taskTitle.innerText = title;
 
+    const deleteButton = document.createElement("span");
+    deleteButton.innerText = "delete me";
+    deleteButton.classList.add("delete");
+    deleteButton.addEventListener("click", (e) => handleDelete(e, id));
+
     taskElementContainer.appendChild(taskTitle);
+    taskElementContainer.appendChild(deleteButton);
     return taskElementContainer;
   };
 
