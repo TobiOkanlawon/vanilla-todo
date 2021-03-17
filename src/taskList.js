@@ -8,7 +8,6 @@ import PubSub from "pubsub-js";
 
 (function () {
   let testStorage = [];
-  let token;
 
   let idCounter = 0;
 
@@ -17,6 +16,8 @@ import PubSub from "pubsub-js";
   const DELETE_TASK = "delete task";
 
   const init = function () {
+    // TODO: Check for app data from localStorage before app starts
+    // TODO: Consider not storing the tokens.
     const addTaskToken = PubSub.subscribe(ADD_TASK, handleAddTask);
     const deleteTaskToken = PubSub.subscribe(DELETE_TASK, handleDeleteTask);
   };
@@ -39,8 +40,8 @@ import PubSub from "pubsub-js";
   };
 
   const _removeTask = function (taskID) {
-    const newTaskList = testStorage.filter(({ entryID }) => {
-      entryID != taskID;
+    const newTaskList = testStorage.filter(({ id }) => {
+      return id != taskID;
     });
 
     testStorage = newTaskList;
